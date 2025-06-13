@@ -1,0 +1,113 @@
+import { useState, useEffect } from "react";
+import styles from "../styles/Projects.module.css";
+
+function Projects() {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.3 }
+        );
+
+        const projectsSection = document.getElementById('projects-section');
+        if (projectsSection) {
+            observer.observe(projectsSection);
+        }
+
+        return () => {
+            if (projectsSection) {
+                observer.unobserve(projectsSection);
+            }
+        };
+    }, []);
+
+    // Project data - currently just one project
+    const projects = [
+        {
+            id: 1,
+            title: "WildTrack",
+            description: "CIT-U Elementary Library Time Tracker. Simplifying library access and time tracking for students and educators.",
+            image: "/src/assets/cit.png", // You'll need to replace this with your actual image path
+            technologies: ["React", "Node.js", "MySQL", "Spring-boot"],
+            status: "Completed"
+        }
+    ];
+
+    return (
+        <section id="projects-section" className={styles.container}>
+            <div className={styles.content}>
+                <div className={`${styles.header} ${isVisible ? styles.animate : ''}`}>
+                    <h2 className={styles.title}>My <span className={styles.highlight}>Projects</span></h2>
+                    <div className={styles.underline}></div>
+                    <p className={styles.subtitle}>Showcasing my work and technical expertise</p>
+                </div>
+
+                <div className={`${styles.projectsGrid} ${isVisible ? styles.animate : ''}`}>
+                    {projects.map((project, index) => (
+                        <div 
+                            key={project.id} 
+                            className={styles.projectCard}
+                            style={{ animationDelay: `${index * 0.2}s` }}
+                        >
+                            <div className={styles.imageContainer}>
+                                <img 
+                                    src={project.image} 
+                                    alt={project.title}
+                                    className={styles.projectImage}
+                                />
+                                <div className={styles.overlay}>
+                                    <div className={styles.overlayContent}>
+                                        <a href="https://github.com/EJhub/WildTrack"><button className={styles.viewButton}>View Details</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className={styles.cardContent}>
+                                <div className={styles.cardHeader}>
+                                    <h3 className={styles.projectTitle}>{project.title}</h3>
+                                    <span className={styles.status}>{project.status}</span>
+                                </div>
+                                
+                                <p className={styles.projectDescription}>
+                                    {project.description}
+                                </p>
+                                
+                                <div className={styles.technologies}>
+                                    {project.technologies.map((tech, techIndex) => (
+                                        <span key={techIndex} className={styles.tech}>
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    
+                    {/* Placeholder cards to show the 3-per-row layout */}
+                    <div className={styles.placeholderCard}>
+                        <div className={styles.placeholderContent}>
+                            <div className={styles.placeholderIcon}>🚀</div>
+                            <h3 className={styles.placeholderTitle}>Coming Soon</h3>
+                            <p className={styles.placeholderText}>More exciting projects in development</p>
+                        </div>
+                    </div>
+                    
+                    <div className={styles.placeholderCard}>
+                        <div className={styles.placeholderContent}>
+                            <div className={styles.placeholderIcon}>💡</div>
+                            <h3 className={styles.placeholderTitle}>In Progress</h3>
+                            <p className={styles.placeholderText}>Working on innovative solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export default Projects;
