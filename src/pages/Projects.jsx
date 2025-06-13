@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Projects.module.css";
+import citImage  from "../assets/cit.png"
 
 function Projects() {
     const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +33,7 @@ function Projects() {
             id: 1,
             title: "WildTrack",
             description: "CIT-U Elementary Library Time Tracker. Simplifying library access and time tracking for students and educators.",
-            image: "/src/assets/cit.png", // You'll need to replace this with your actual image path
+            image: citImage, // You'll need to replace this with your actual image path
             technologies: ["React", "Node.js", "MySQL", "Spring-boot"],
             status: "Completed"
         }
