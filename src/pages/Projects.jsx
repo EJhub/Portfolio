@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Projects.module.css";
-import citImage  from "../assets/cit.png"
+import citImage  from "../assets/cit.png";
+import weathermate from "../assets/weathermate.png";
 
 function Projects() {
     const [isVisible, setIsVisible] = useState(false);
@@ -35,7 +36,17 @@ function Projects() {
             description: "CIT-U Elementary Library Time Tracker. Simplifying library access and time tracking for students and educators.",
             image: citImage, // You'll need to replace this with your actual image path
             technologies: ["React", "Node.js", "MySQL", "Spring-boot"],
-            status: "Completed"
+            status: "Completed",
+            link: "https://wild-track.vercel.app/"
+        },
+        {
+            id: 2,
+            title: "WeatherMate",
+            description: "It is a responsive React app that shows real-time weather data using the OpenWeather API",
+            image: weathermate, // You'll need to replace this with your actual image path
+            technologies: ["React", "CSS", "OpenWeather API"],
+            status: "Completed",
+            link: "https://weathermate-cucl.vercel.app/"
         }
     ];
 
@@ -63,7 +74,7 @@ function Projects() {
                                 />
                                 <div className={styles.overlay}>
                                     <div className={styles.overlayContent}>
-                                        <a href="https://github.com/EJhub/WildTrack"><button className={styles.viewButton}>View Details</button></a>
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer"><button className={styles.viewButton}>View</button></a>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import emailjs from 'emailjs-com';
 import styles from "../styles/Contact.module.css";
 
 function Contact() {
@@ -42,48 +43,70 @@ function Contact() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
-        // Create mailto link
-        const subject = encodeURIComponent(formData.subject || 'Contact from Portfolio Website');
-        const body = encodeURIComponent(
-            `Name: ${formData.name}\n` +
-            `Email: ${formData.email}\n` +
-            `Subject: ${formData.subject}\n\n` +
-            `Message:\n${formData.message}`
-        );
-        
-        const mailtoLink = `mailto:ej54321david@gmail.com?subject=${subject}&body=${body}`;
-        
-        // Open email client
-        window.location.href = mailtoLink;
-        
-        // Reset form and show success message
-        setTimeout(() => {
-            setIsSubmitting(false);
+        setSubmitStatus('');
+
+        try {
+            // EmailJS configuration
+            const serviceID = 'service_ji178jk'; // Replace with your EmailJS service ID
+            const templateID = 'template_x478qp7'; // Replace with your EmailJS template ID
+            const userID = 'c_uP54oEzUSal4hqt'; // Replace with your EmailJS user ID
+
+            // Template parameters that will be sent to EmailJS
+            const templateParams = {
+                from_name: formData.name,
+                from_email: formData.email,
+                to_email: 'ellyzesjohn@gmail.com',
+                subject: formData.subject || 'Contact from Portfolio Website',
+                message: formData.message,
+                reply_to: formData.email
+            };
+
+            // Send email using EmailJS
+            const response = await emailjs.send(
+                serviceID,
+                templateID,
+                templateParams,
+                userID
+            );
+
+            console.log('Email sent successfully:', response);
             setSubmitStatus('success');
+            
+            // Reset form
             setFormData({
                 name: '',
                 email: '',
                 subject: '',
                 message: ''
             });
-            
-            // Clear success message after 3 seconds
+
+            // Clear success message after 5 seconds
             setTimeout(() => {
                 setSubmitStatus('');
-            }, 3000);
-        }, 1000);
+            }, 5000);
+
+        } catch (error) {
+            console.error('Email sending failed:', error);
+            setSubmitStatus('error');
+            
+            // Clear error message after 5 seconds
+            setTimeout(() => {
+                setSubmitStatus('');
+            }, 5000);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const contactInfo = [
         {
             icon: '📧',
             title: 'Email',
-            value: 'ej54321david@gmail.com',
-            link: 'mailto:ej54321david@gmail.com'
+            value: 'ellyzesjohn@gmail.com',
+            link: 'mailto:ellyzesjohn@gmail.com'
         },
         {
             icon: '🐙',
@@ -220,7 +243,7 @@ function Contact() {
                                 {isSubmitting ? (
                                     <>
                                         <span className={styles.spinner}></span>
-                                        Opening Email Client...
+                                        Sending Message...
                                     </>
                                 ) : (
                                     <>
@@ -233,7 +256,14 @@ function Contact() {
                             {submitStatus === 'success' && (
                                 <div className={styles.successMessage}>
                                     <span className={styles.successIcon}>✅</span>
-                                    Email client opened! Please send the message from your email application.
+                                    Message sent successfully! I'll get back to you soon.
+                                </div>
+                            )}
+
+                            {submitStatus === 'error' && (
+                                <div className={styles.errorMessage}>
+                                    <span className={styles.errorIcon}>❌</span>
+                                    Failed to send message. Please try again or contact me directly.
                                 </div>
                             )}
                         </form>
