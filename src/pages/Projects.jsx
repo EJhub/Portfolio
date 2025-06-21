@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Projects.module.css";
 import citImage  from "../assets/cit.png";
 import weathermate from "../assets/weathermate.png";
+import colorpicker from "../assets/ColorPicker.png";
 
 function Projects() {
     const [isVisible, setIsVisible] = useState(false);
@@ -47,6 +48,15 @@ function Projects() {
             technologies: ["React", "CSS", "OpenWeather API"],
             status: "Completed",
             link: "https://weathermate-cucl.vercel.app/"
+        },
+         {
+            id: 3,
+            title: "Color Picker",
+            description: "A React-based interactive color picker featuring dark/light theme toggle and animated \"EJ\" text bubbles that float across the background in random colors. Users can select colors using a color input, view the selected color in a large preview box, and switch between light and dark modes with a toggle button.",
+            image: colorpicker, // You'll need to replace this with your actual image path
+            technologies: ["React", "CSS"],
+            status: "Completed",
+            link: "https://ejcolor-picker.vercel.app/"
         }
     ];
 
