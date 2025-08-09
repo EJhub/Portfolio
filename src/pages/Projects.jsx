@@ -3,6 +3,7 @@ import styles from "../styles/Projects.module.css";
 import citImage  from "../assets/cit.png";
 import weathermate from "../assets/weathermate.png";
 import colorpicker from "../assets/ColorPicker.png";
+import TaskManager from "../assets/TaskManager.png"
 
 function Projects() {
     const [isVisible, setIsVisible] = useState(false);
@@ -57,6 +58,15 @@ function Projects() {
             technologies: ["React", "CSS"],
             status: "Completed",
             link: "https://ejcolor-picker.vercel.app/"
+        },
+        {
+            id: 4,
+            title: "Task Manager",
+            description: "A simple React+Redux Task Manager app where users can ADD, EDIT, DELETE task and Mark as complete",
+            image: TaskManager, // You'll need to replace this with your actual image path
+            technologies: ["React", "Redux"],
+            status: "Completed",
+            link: "https://task-manager-iota-sepia.vercel.app/"
         }
     ];
 
